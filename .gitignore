@@ -1,0 +1,6 @@
+# Ignore Mac system files
+.DS_store
+
+# Ignore folders
+project_1/.ipynb_checkpoints
+
