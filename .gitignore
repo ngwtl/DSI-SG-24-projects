@@ -1,6 +1,9 @@
 # Ignore Mac system files
 .DS_store
 
+# Ignore R files
+.Rhistory   
+
 # Ignore folders
 project_1/.ipynb_checkpoints
 
