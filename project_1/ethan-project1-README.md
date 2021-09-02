@@ -54,9 +54,9 @@ A correlation heatmap was created to analyse all data variables. Some highly cor
 * SAT subject scores
 * Median household income
 
-Using the remaining variables, a new correlation heatmap and sns.pairplot are drawn up to analyse relationships between variables. 
+A new correlation heatmap and sns.pairplot are drawn up to analyse relationships between all remaining variables. Next, I create mulitple scatter plots with fitted lines to look into my variables of interest in further details.
 
-We see that ACT and SAT state scores seem to be lower in states with high propoportion of minority races.
+I see that ACT and SAT state scores seem to be lower in states with high propoportion of minority races.
 * In particular, states with high proportion of Blacks and Native Americans seem to do poorly in ACT.
 * States with high proportion of Asians and Hispanics seem to do poorly in SAT.
 
