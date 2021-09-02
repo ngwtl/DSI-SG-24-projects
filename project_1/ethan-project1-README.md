@@ -10,37 +10,27 @@ The goal is to use the results of our preliminary study to convince potential do
 
 ### Data Dictionary
 ACT and SAT data from General Assembly
-act2017 = pd.read_csv('../data/act_2017.csv')
-act2018 = pd.read_csv('../data/act_2018.csv')
-sat2017 = pd.read_csv('../data/sat_2017.csv')
-sat2018 = pd.read_csv('../data/sat_2018.csv')
+* act2017 = pd.read_csv('../data/act_2017.csv')
+* act2018 = pd.read_csv('../data/act_2018.csv')
+* sat2017 = pd.read_csv('../data/sat_2017.csv')
+* sat2018 = pd.read_csv('../data/sat_2018.csv')
 
 Racial demographics data (by state) from Kaiser Foundation
-
-(https://www.kff.org/other/state-indicator/distribution-by-raceethnicity/?currentTimeframe=2&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D)
-
-race2017 = pd.read_csv('../data/race_2017.csv')
-
-race2018 = pd.read_csv('../data/race_2018.csv')
+* (https://www.kff.org/other/state-indicator/distribution-by-raceethnicity/?currentTimeframe=2&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D)
+* race2017 = pd.read_csv('../data/race_2017.csv')
+* race2018 = pd.read_csv('../data/race_2018.csv')
 
 
 Household income data (by state) from US Census
-
-(https://data.census.gov/cedsci/table?q=S1901&g=0100000US.04000.001&tid=ACSST1Y2019.S1901&hidePreview=true&tp=true)
-
-Read the metadata file for more info on the data categories
-
-income2017 = pd.read_csv('../data/S1901_2017.csv')
-
-income2018 = pd.read_csv('../data/S1901_2018.csv')
+* (https://data.census.gov/cedsci/table?q=S1901&g=0100000US.04000.001&tid=ACSST1Y2019.S1901&hidePreview=true&tp=true)
+* See US Census metadata file in the data folder for more info on the data categories
+* income2017 = pd.read_csv('../data/S1901_2017.csv')
+* income2018 = pd.read_csv('../data/S1901_2018.csv')
 
 Gini coefficient data (by state) from US Census
-
-(https://data.census.gov/cedsci/table?q=B19083&g=0100000US.04000.001&tid=ACSDT1Y2018.B19083&tp=true&hidePreview=false)
-
-gini2017 = pd.read_csv('../data/B19083_2017.csv')
-
-gini2018 = pd.read_csv('../data/B19083_2018.csv')
+* (https://data.census.gov/cedsci/table?q=B19083&g=0100000US.04000.001&tid=ACSDT1Y2018.B19083&tp=true&hidePreview=false)
+* gini2017 = pd.read_csv('../data/B19083_2017.csv')
+* gini2018 = pd.read_csv('../data/B19083_2018.csv')
 
 
 
