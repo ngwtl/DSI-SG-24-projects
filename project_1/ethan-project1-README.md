@@ -4,9 +4,9 @@
 ### Hypothetical Background and Problem Statement
 Black Lives Matter (BLM) is a political and social movement protesting against incidents of police brutality against black people. We are a non-profit student organisation that is an offshoot of BLM, and our main goal is to voice support against institutionalised odds that are stacked against blacks and other minority groups.
 
-We wish to investigate and gather evidence that standardised tests such as SAT and ACT are discriminatory against blacks and other non-white minority groups. By conducting some basic exploratory data analysis, we hope to observe some negative relationships between test scores and minority races.
+We wish to investigate and gather evidence that standardised tests such as SAT and ACT are discriminatory against blacks and other non-white minority groups. By conducting some basic exploratory data analysis, we hope to observe some negative relationships between test scores and minority races, while anticpating and potentially answering some criticisms or skepticisms from donors.
 
-The goal is to use the results of our preliminary study to convince potential donors to fund our organisation to conduct an in-depth study to investigate if minority students from comparable socioeconomic backgrounds score lower than their White peers, while anticpating and potentially answering some criticisms or skepticisms from them.
+The hope is to use the results of our EDA to convince these donors to fund an in-depth study to investigate if minority students from comparable socioeconomic backgrounds score lower than their White peers.
 
 ### Data Dictionary
 1. ACT and SAT data from General Assembly
