@@ -14,7 +14,7 @@ The cleaned data sets are stored in "../datasets/df_train.csv" and "../datasets/
 
 | No. | Feature | DType |  Description | Remarks |
 |-----|---------|------|-------------|---------|
-| 1 | saleprice | integer | Sale price $ | \$12,789 to  \\$611,657 |
+| 1 | saleprice | integer | Sale price $ | \$12,789 to  \$611,657 |
 | 2 | street | integer | Type of road access to property (Paved or Gravel) | Pave = 1, Gravel = 0 | 
 | 3 | neighborhood | integer | Physical locations within Ames city limits | Dummified 28 neighborhoods, dropped "Old Town" to become the baseline |
 | 4 | condition_1 | integer | Proximity to various conditions ("Norm" = Normal, "FeederArt" = Adjacent to arterial street or feeder street, "Pos" = Adjacent or near positive off-site feature, "Rail" = Adjacent or near North-South Railroad or East-West Railroad) | Dummified the 4 conditions, dropped "Norm" to become the baseline |
