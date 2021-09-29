@@ -1,0 +1,23 @@
+Model No.,Word Vectorizer,Classifier,CV Score (train),Accuracy (train),Accuracy (test),Sensitivity (test),Specificity (test),Precision (test),Runtime (sec),Remarks
+1,CountVectorizer(),MultinomialNB(),0.796,0.83,0.783,0.856,0.71,0.749,116,Lemmatized
+2,TfidfVectorizer(),MultinomialNB(),0.81,0.853,0.788,0.818,0.759,0.774,106,Lemmatized
+3,CountVectorizer(),LogisticRegression(),0.806,0.92,0.796,0.818,0.773,0.785,120,Lemmatized
+4,TfidfVectorizer(),LogisticRegression(),0.824,0.899,0.801,0.818,0.785,0.793,113,Lemmatized
+5,CountVectorizer(),RandomForestClassifier(),0.812,0.999,0.803,0.784,0.822,0.817,657,Lemmatized
+6,TfidfVectorizer(),RandomForestClassifier(),0.816,0.999,0.799,0.81,0.788,0.794,670,Lemmatized
+7,CountVectorizer(),ExtraTreesClassifier(),0.815,0.999,0.792,0.777,0.808,0.803,672,Lemmatized
+8,TfidfVectorizer(),ExtraTreesClassifier(),0.822,0.999,0.799,0.774,0.824,0.816,620,Lemmatized
+9,TfidfVectorizer(),LogisticRegression(),0.823,0.903,0.81,0.816,0.804,0.808,38,"Stemmatized, cousin of Model 4"
+10,TfidfVectorizer(),ExtraTreesClassifier(),0.821,0.999,0.797,0.784,0.811,0.807,89,"Stemmatized, cousin of Model 8"
+11,TfidfVectorizer(),LogisticRegression(),0.72,0.856,0.714,0.747,0.68,0.703,30,"Lemmatized, only bi-grams and tri-grams"
+12,TfidfVectorizer(),ExtraTreesClassifier(),0.703,0.961,0.689,0.698,0.68,0.688,46,"Lemmatized, only bi-grams and tri-grams"
+13,TfidfVectorizer(),LogisticRegression(),0.82,0.898,0.796,0.806,0.786,0.792,39,"Removed 35 intersecting common words, cousin of Model 4"
+14,TfidfVectorizer(),ExtraTreesClassifier(),0.809,0.999,0.781,0.76,0.803,0.796,78,"Removed 35 intersecting common words, cousin of Model 8"
+15,TfidfVectorizer(),LogisticRegression(),0.814,0.9,0.801,0.818,0.785,0.793,30,"Removed 157 intersecting common words, cousin of Model 4"
+16,TfidfVectorizer(),ExtraTreesClassifier(),0.804,0.999,0.784,0.763,0.806,0.799,83,"Removed 157 intersecting common words, cousin of Model 8"
+17,TfidfVectorizer(),LogisticRegression(),0.834,0.908,0.815,0.808,0.822,0.821,48,"Combine title and selftext, cousin of Model 4"
+18,TfidfVectorizer(),ExtraTreesClassifier(),0.83,0.999,0.816,0.798,0.834,0.829,99,"Combine title and selftext, cousin of Model 8"
+19,TfidfVectorizer(),LogisticRegression(),0.84,0.927,0.82,0.818,0.822,0.823,159,"Model 17, but with more hyperparameters to search on"
+20,TfidfVectorizer(),LogisticRegression(),0.84,0.927,0.82,0.818,0.822,0.823,294,"Model 17, final round of tuning of hyperparameters"
+21,TfidfVectorizer(),AdaBoost-DecisionTree,0.781,0.83,0.77,0.829,0.71,0.743,13,Cousin of Model 20
+22,TfidfVectorizer(),XGBoost-DecisionTree,0.82,0.924,0.809,0.819,0.798,0.804,68,Cousin of Model 20
