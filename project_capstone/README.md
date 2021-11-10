@@ -14,9 +14,7 @@ I managed to achieve an out-of-sample R2 of 0.42 with a 7-layer neural network w
 
 The best model from Gu, Kelly and Xiu (2020) is also a neural network, but its performance peaked at 3 layers. They found using deep learning (defined as anything more than 3 layers) results in overfitting to stock market noise. That is not my experience with REITs, as my out-of-sample R2 for a 3-layer network is 0.04, jumping to 0.23 for a 5-layer network, and peaking at 0.42 for a 7-layer network. 
 
-
-
-The following table summarizes the performance of all 18 models:
+The following table summarizes the performance of all 18 models. The numbers without parentheses are R2s, while those in parentheses are RMSE.
 
 <table border="1" class="dataframe">
   <thead>
@@ -480,69 +478,734 @@ The following table summarizes the performance of all 18 models:
     </tr>
   </tbody>
 </table>
-1
-df_r2decrease_reit 
-
-| Model No. | Classifier | CV Score (train) | ROC_AUC (train) | ROC_AUC (test) | Kaggle Score | Runtime (sec) |
-|---|---|---|---|---|---|---|
-| 1 | LogisticRegression(random_state=42, solver='liblinear') | 0.989000 | 0.994000 | 0.830000 | 0.684000 | 7 |
-| 2 | KNeighborsClassifier() | 0.919000 | 1.000000 | 0.7776000 | 0.596000 | 24 |
-| 4 | RandomForestClassifier(random_state=42) | 0.979000 | 0.996000 | 0.804000 | 0.643000 | 33 |
-| 4 | ExtraTreesClassifier(random_state=42) | 0.989000 | 1.000000 | 0.809000 | 0.710000 | 93 |
-| 5 | SVC(max_iter=10000, random_state=42) | 0.973000 | 0.981000 | 0.803000 | 0.598000 | 136 |
-| 6 | XGBClassifier(base_score=None, booster=None, colsample_bylevel=None, <br>colsample_bynode=None, colsample_bytree=None, gamma=None, gpu_id=None, <br>importance_type='gain', interaction_constraints=None, learning_rate=None, <br>max_delta_step=None, max_depth=None, min_child_weight=None, missing=nan, <br>monotone_constraints=None, n_estimators=100, n_jobs=None, num_parallel_tree=None, <br>random_state=42, reg_alpha=None, reg_lambda=None, scale_pos_weight=None, <br>subsample=None, tree_method=None, validate_parameters=None, verbosity=None) | 0.992000 | 1.000000 | 0.831000 | 0.697000 | 133 |
-| 7 | LogisticRegression(random_state=42) | 0.989000 | 0.994000 | 0.828000 | 0.684000 | 176 |
-| 8 | XGBClassifier(base_score=None, booster=None, colsample_bylevel=None, <br>colsample_bynode=None, colsample_bytree=None, gamma=None, gpu_id=None, <br>importance_type='gain', interaction_constraints=None, learning_rate=None, <br>max_delta_step=None, max_depth=None, min_child_weight=None, missing=nan, <br>monotone_constraints=None, n_estimators=100, n_jobs=None, num_parallel_tree=None, <br>random_state=42, reg_alpha=None, reg_lambda=None, scale_pos_weight=None, <br>subsample=None, tree_method=None, validate_parameters=None, verbosity=None) | 0.991000 | 0.999000 | 0.830000 | 0.658000 | 104 |
-| 9 | LogisticRegression(random_state=42, solver='liblinear') | 0.989000 | 0.994000 | 0.826000 | 0.693000 | 10 |
-| 10 | XGBClassifier(base_score=None, booster=None, colsample_bylevel=None, <br>colsample_bynode=None, colsample_bytree=None, gamma=None, gpu_id=None, <br>importance_type='gain', interaction_constraints=None, learning_rate=None, <br>max_delta_step=None, max_depth=None, min_child_weight=None, missing=nan, <br>monotone_constraints=None, n_estimators=100, n_jobs=None, num_parallel_tree=None, <br>random_state=42, reg_alpha=None, reg_lambda=None, scale_pos_weight=None, subsample=None, <br>tree_method=None, validate_parameters=None, verbosity=None) | 0.990000 | 1.000000 | 0.797000 | 0.673000 | 182 |
-| 11 | LogisticRegression(random_state=42, solver='liblinear') | 0.988000 | 0.993000 | 0.832000 | 0.717000 | 6 |
-| 12 | XGBClassifier(base_score=None, booster=None, colsample_bylevel=None, <br>colsample_bynode=None, colsample_bytree=None, gamma=None, gpu_id=None, <br>importance_type='gain', interaction_constraints=None, learning_rate=None, <br>max_delta_step=None, max_depth=None, min_child_weight=None, missing=nan, <br>monotone_constraints=None, n_estimators=100, n_jobs=None, num_parallel_tree=None, <br>random_state=42, reg_alpha=None, reg_lambda=None, scale_pos_weight=None, <br>subsample=None, tree_method=None, validate_parameters=None, verbosity=None) | 0.990000 | 0.997000 | 0.826000 | 0.683000 | 141 |
-| 13 | LogisticRegression(random_state=42, solver='liblinear') | 0.987000 | 0.992000 | 0.826000 | 0.734000 | 4 |
-| 14 | XGBClassifier(base_score=None, booster=None, colsample_bylevel=None, <br>colsample_bynode=None, colsample_bytree=None, gamma=None, gpu_id=None, <br>importance_type='gain', interaction_constraints=None, learning_rate=None, <br>max_delta_step=None, max_depth=None, min_child_weight=None, missing=nan, <br>monotone_constraints=None, n_estimators=100, n_jobs=None, num_parallel_tree=None, <br>random_state=42, reg_alpha=None, reg_lambda=None, scale_pos_weight=None, subsample=None, <br>tree_method=None, validate_parameters=None, verbosity=None) | 0.992000 | 0.999000 | 0.825000 | 0.715000 | 114 |
-| 15 | LogisticRegression(random_state=42, solver='liblinear') | 0.989000 | 0.993000 | 0.845000 | 0.708000 | 5 |
-| 16 | XGBClassifier(base_score=None, booster=None, colsample_bylevel=None, <br>colsample_bynode=None, colsample_bytree=None, gamma=None, gpu_id=None, <br>importance_type='gain', interaction_constraints=None, learning_rate=None, <br>max_delta_step=None, max_depth=None, min_child_weight=None, missing=nan, <br>monotone_constraints=None, n_estimators=100, n_jobs=None, num_parallel_tree=None, <br>random_state=42, reg_alpha=None, reg_lambda=None, scale_pos_weight=None, subsample=None, <br>tree_method=None, validate_parameters=None, verbosity=None) | 0.990000 | 0.997000 | 0.829000 | 0.690000 | 118 |
-| 17 | LogisticRegression(random_state=42, solver='liblinear') | 0.990000 | 0.994000 | 0.849000 | 0.725000 | 9 |
-| 18 | XGBClassifier(base_score=None, booster=None, colsample_bylevel=None, <br>colsample_bynode=None, colsample_bytree=None, gamma=None, gpu_id=None, <br>importance_type='gain', interaction_constraints=None, learning_rate=None, <br>max_delta_step=None, max_depth=None, min_child_weight=None, missing=nan, <br>monotone_constraints=None, n_estimators=100, n_jobs=None, num_parallel_tree=None, <br>random_state=42, reg_alpha=None, reg_lambda=None, scale_pos_weight=None, subsample=None, <br>tree_method=None, validate_parameters=None, verbosity=None) | 0.991000 | 0.999000 | 0.843000 | 0.704000 | 129 |
-|  |  |  |  |  |  |  |
 
 
 ## Data Dictionary
 
-| Feature | Type | Dataset | Description |
-|---|---|---|---|
-| Id | Integer | Test | The id of the record |
-| Date | Object | Train/Test/Weather | Date that the WNV test is performed for Train/TestDate of weather measurement for Weather |
-| Address | Object | Train/Test | Approximate address of the location of trap. This is used to send to the GeoCoder. |
-| Species | Object | Train/Test | The species of mosquitos |
-| Block | Integer | Train/Test | Block number of address |
-| Street | Object | Train/Test | Street name |
-| Trap | Object | Train/Test | Id of the trap |
-| AddressNumberAndStreet | Object | Train/Test | Approximate address returned from GeoCoder |
-| Latitude | Float | Train/Test/Spray | Latitude returned from GeoCoder for Train/Test <br>Latitude of the spray |
-| Longitude | Float | Train/Test/Spray | Longitude returned from GeoCoder for Train/Test<br>Longitude of the spray |
-| AddressAccuracy | Integer | Train/Test | Accuracy returned from GeoCoder |
-| NumMosquitos | Integer | Train | Number of mosquitoes caught in this trap |
-| WnvPresent | Integer | Train | Whether West Nile Virus was present in these mosquitos. <br>1 means WNV is present, and 0 means not present. |
-| Station | Integer | Weather | 1; automated station without a precipitation descriminator. <br>2; automated station with precipitation descriminator. |
-| Tmax | Integer | Weather | Maximum Temperature |
-| Tmin | Integer | Weather | Minimum Temperature |
-| Tavg | Integer | Weather | Average Temperature |
-| Depart | Integer | Weather | Departure from normal |
-| Dewpoint | Integer | Weather | Average dew point |
-| Wetbulb | Integer | Weather | Average wet bulb |
-| Heat | Integer | Weather | Heating (Season begins with July) |
-| Cool | Integer | Weather | Cooling (Season begins with January) |
-| Sunrise | Object | Weather | Sunrise Time (Calculated, not observed) |
-| Sunset | Object | Weather | Sunset Time (Calculated, not observed) |
-| CodeSum | Object | Weather | Significant Weather Types<br><br>+FC TORNADO/WATERSPOUT<br> FC  FUNNEL CLOUD<br> TS  THUNDERSTORM<br> GR  HAIL<br>RA RAIN<br>DZ DRIZZLE<br>SN SNOW<br>SG SNOW GRAINS<br>GS SMALL HAIL &/OR SNOW PELLETS<br>PL ICE PELLETS<br>IC ICE CRYSTALS<br>FG+ HEAVY FOG (FG & LE.25 MILES VISIBILITY) FG FOG<br>BR MIST<br>UP UNKNOWN PRECIPITATION<br>HZ HAZE<br>FU SMOKE<br>VA VOLCANIC ASH<br>DU WIDESPREAD DUST<br>DS DUSTSTORM<br>PO SAND/DUST WHIRLS<br>SA SAND<br>SS SANDSTORM<br>PY SPRAY<br>SQ SQUALL<br>DR LOW DRIFTING<br>SH SHOWER<br>FZ FREEZING<br>MI SHALLOW<br>PR PARTIAL<br>BC PATCHES<br>BL BLOWING<br>VC VICINITY<br>- LIGHT + HEAVY<br>"NO SIGN" MODERATE |
-| Depth | Integer | Weather | Depth of snow/ice in inches SNOW/ICE (ON GROUND)(1200 UTC)T = TRACEM = MISSING DATA |
-| Water1 | Integer | Weather | WATER EQUIVALENT (1800 UTC) M = MISSING DATA |
-| SnowFall | Float | Weather | SNOWFALL (INCHES AND TENTHS)(2400 LST)*<br>T = TRACEM = MISSING DATA |
-| PrecipTotal | Float | Weather | WATER EQUIVALENT(INCHES & HUNDREDTHS(2400 LST) RAINFALL & MELTED SNOW<br>M = MISSING DATAT = TRACE |
-| StnPressure | Float | Weather | Pressure in inches |
-| SeaLevel | Float | Weather | Average Sea Level Pressure |
-| ResultSpeed | Float | Weather | Resultant Wind Speed |
-| ResultDir | Integer | Weather | Resultant Wind Direction (Whole Degree) |
-| AvgSpeed | Float | Weather | Wing Average Speed |
-
-
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Feature acronym</th>
+      <th>Original author(s)</th>
+      <th>Date, journal</th>
+      <th>Description of feature</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>absacc</td>
+      <td>Bandyopadhyay, Huang, and Wirjanto</td>
+      <td>2010, WP</td>
+      <td>Absolute value ofacc</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>acc</td>
+      <td>Sloan</td>
+      <td>1996, TAR</td>
+      <td>Annual income before extraordinary items (ib) minus operating cash flows (oancf) divided by average total assets (at); ifoancfis missing then set to change inact- change inche- change inlct|$+$|change indlc|$+$|change intxp-dp</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>aeavol</td>
+      <td>Lerman, Livnat, and Mendenhall</td>
+      <td>2008, WP</td>
+      <td>Average daily trading volume (vol) for 3 days around earnings announcement minus average daily volume for 1-month ending 2 weeks before earnings announcement divided by 1-month average daily volume. Earnings announcement day from Compustat quarterly (rdq)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>age</td>
+      <td>Jiang, Lee, and Zhang</td>
+      <td>2005, RAS</td>
+      <td>Number of years since first Compustat coverage</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>agr</td>
+      <td>Cooper, Gulen, and Schill</td>
+      <td>2008, JF</td>
+      <td>Annual percent change in total assets (at)</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>baspread</td>
+      <td>Amihud and Mendelson</td>
+      <td>1989, JF</td>
+      <td>Monthly average of daily bid-ask spread divided by average of daily spread</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>beta</td>
+      <td>Fama and MacBeth</td>
+      <td>1973, JPE</td>
+      <td>Estimated market beta from weekly returns and equal weighted market returns for 3 years ending month|$t$|-1 with at least 52 weeks of returns</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>betasq</td>
+      <td>Fama and MacBeth</td>
+      <td>1973, JPE</td>
+      <td>Market beta squared</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>bm</td>
+      <td>Rosenberg, Reid, and Lanstein</td>
+      <td>1985, JPM</td>
+      <td>Book value of equity (ceq) divided by end of fiscal year-end market capitalization</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>bm_ia</td>
+      <td>Asness, Porter, and Stevens</td>
+      <td>2000, WP</td>
+      <td>Industry adjusted book-to-market ratio</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>cash</td>
+      <td>Palazzo</td>
+      <td>2012, JFE</td>
+      <td>Cash and cash equivalents divided by average total assets</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>cashdebt</td>
+      <td>Ou and Penman</td>
+      <td>1989, JAE</td>
+      <td>Earnings before depreciation and extraordinary items (ib|$+$|dp) divided by avg. total liabilities (lt)</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>cashpr</td>
+      <td>Chandrashekar and Rao</td>
+      <td>2009, WP</td>
+      <td>Fiscal year-end market capitalization plus long-term debt (dltt) minus total assets (at) divided by cash and equivalents (che)</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>cfp</td>
+      <td>Desai, Rajgopal, and Venkatachalam</td>
+      <td>2004, TAR</td>
+      <td>Operating cash flows divided by fiscal-year-end market capitalization</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>cfp_ia</td>
+      <td>Asness, Porter and Stevens</td>
+      <td>2000, WP</td>
+      <td>Industry adjustedcfp</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>chatoia</td>
+      <td>Soliman</td>
+      <td>2008, TAR</td>
+      <td>2-digit SIC - fiscal-year mean-adjusted change in sales (sale) divided by average total assets (at)</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>chcsho</td>
+      <td>Pontiff and Woodgate</td>
+      <td>2008, JF</td>
+      <td>Annual percent change in shares outstanding (csho)</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>chempia</td>
+      <td>Asness, Porter, and Stevens</td>
+      <td>1994, WP</td>
+      <td>Industry-adjusted change in number of employees</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>chfeps</td>
+      <td>Hawkins, Chamberlin, and Daniel</td>
+      <td>1984, FAJ</td>
+      <td>Mean analyst forecast in month prior to fiscal period end date from I/B/E/S summary file minus same mean forecast for prior fiscal period using annual earnings forecasts</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>chinv</td>
+      <td>Thomas and Zhang</td>
+      <td>2002, RAS</td>
+      <td>Change in inventory (inv) scaled by average total assets (at)</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>chmom</td>
+      <td>Gettleman and Marks</td>
+      <td>2006, WP</td>
+      <td>Cumulative returns from months|$t$|-6 to|$t$|-1 minus months|$t$|-12 to|$t$|-7</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>chnanalyst</td>
+      <td>Scherbina</td>
+      <td>2008 RF</td>
+      <td>Change innanalystfrom month|$t$|-3 to month|$t$|</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>chpmia</td>
+      <td>Soliman</td>
+      <td>2008, TAR</td>
+      <td>2-digit SIC - fiscal-year mean adjusted change in income before extraordinary items (ib) divided by sales (sale)</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>chtx</td>
+      <td>Thomas and Zhang</td>
+      <td>2011, JAR</td>
+      <td>Percent change in total taxes (txtq) from quarter|$ t$|-4 to|$t$|</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>cinvest</td>
+      <td>Titman, Wei, and Xie</td>
+      <td>2004, JFQA</td>
+      <td>Change over one quarter in net PP&amp;E (ppentq) divided by sales (saleq) - average of this variable for prior 3 quarters; ifsaleq|$=$|0, then scale by 0.01</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>convind</td>
+      <td>Valta</td>
+      <td>2016, JFQA</td>
+      <td>An indicator equal to 1 if company has convertible debt obligations</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>currat</td>
+      <td>Ou and Penman</td>
+      <td>1989, JAE</td>
+      <td>Current assets / current liabilities</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>depr</td>
+      <td>Holthausen and Larcker</td>
+      <td>1992, JAE</td>
+      <td>Depreciation divided by PP&amp;E</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>disp</td>
+      <td>Diether, Malloy, and Scherbina</td>
+      <td>2002, JF</td>
+      <td>Standard deviation of analyst forecasts in month prior to fiscal period end date divided by the absolute value of the mean forecast; ifmeanest|$=$|0, then scalar set to 1. Forecast data from I/B/E/S summary files</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>divi</td>
+      <td>Michaely, Thaler, and Womack</td>
+      <td>1995, JF</td>
+      <td>An indicator variable equal to 1 if company pays dividends but did not in prior year</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>divo</td>
+      <td>Michaely, Thaler, and Womack</td>
+      <td>1995, JF</td>
+      <td>An indicator variable equal to 1 if company does not pay dividend but did in prior year</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>dolvol</td>
+      <td>Chordia, Subrahmanyam, and Anshuman</td>
+      <td>2001, JFE</td>
+      <td>Natural log of trading volume times price per share from month|$t$|-2</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>dy</td>
+      <td>Litzenberger and Ramaswamy</td>
+      <td>1982, JF</td>
+      <td>Total dividends (dvt) divided by market capitalization at fiscal year-end</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>ear</td>
+      <td>Kishore et al.</td>
+      <td>2008, WP</td>
+      <td>Sum of daily returns in three days around earnings announcement. Earnings announcement from Compustat quarterly file (rdq)</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>egr</td>
+      <td>Richardson et al.</td>
+      <td>2005, JAE</td>
+      <td>Annual percent change in book value of equity (ceq)</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>ep</td>
+      <td>Basu</td>
+      <td>1977, JF</td>
+      <td>Annual income before extraordinary items (ib) divided by end of fiscal year market cap</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>fgr5yr</td>
+      <td>Bauman and Dowen</td>
+      <td>1988, FAJ</td>
+      <td>Most recently available analyst forecasted 5-year growth</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>gma</td>
+      <td>Novy-Marx</td>
+      <td>2013, JFE</td>
+      <td>Revenues (revt) minus cost of goods sold (cogs) divided by lagged total assets (at)</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>grCAPX</td>
+      <td>Anderson and Garcia-Feijoo</td>
+      <td>2006, JF</td>
+      <td>Percent change in capital expenditures from year|$ t$|-2 to year|$t$|</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>grltnoa</td>
+      <td>Fairfield, Whisenant, and Yohn</td>
+      <td>2003, TAR</td>
+      <td>Growth in long-term net operating assets</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>herf</td>
+      <td>Hou and Robinson</td>
+      <td>2006, JF</td>
+      <td>2-digit SIC - fiscal-year sales concentration (sum of squared percent of sales in industry for each company).</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>hire</td>
+      <td>Bazdresch, Belo, and Lin</td>
+      <td>2014, JPE</td>
+      <td>Percent change in number of employees (emp)</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>idiovol</td>
+      <td>Ali, Hwang, and Trombley</td>
+      <td>2003, JFE</td>
+      <td>Standard deviation of residuals of weekly returns on weekly equal weighted market returns for 3 years prior to month end</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>ill</td>
+      <td>Amihud</td>
+      <td>2002, JFM</td>
+      <td>Average of daily (absolute return / dollar volume).</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>indmom</td>
+      <td>Moskowitz and Grinblatt</td>
+      <td>1999, JF</td>
+      <td>Equal weighted average industry 12-month returns</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>invest</td>
+      <td>Chen and Zhang</td>
+      <td>2010, JF</td>
+      <td>Annual change in gross property, plant, and equipment (ppegt)|$+$|annual change in inventories (invt) all scaled by lagged total assets (at)</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>IPO</td>
+      <td>Loughran and Ritter</td>
+      <td>1995, JF</td>
+      <td>An indicator variable equal to 1 if first year available on CRSP monthly stock file</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>lev</td>
+      <td>Bhandari</td>
+      <td>1988, JF</td>
+      <td>Total liabilities (lt) divided by fiscal year-end market capitalization</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>lgr</td>
+      <td>Richardson et al.</td>
+      <td>2005, JAE</td>
+      <td>Annual percent change in total liabilities (lt)</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>maxret</td>
+      <td>Bali, Cakici, and Whitelaw</td>
+      <td>2011, JFE</td>
+      <td>Maximum daily return from returns during calendar month|$ t$|-1</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>mom12m</td>
+      <td>Jegadeesh</td>
+      <td>1990, JF</td>
+      <td>11-month cumulative returns ending one month before month end</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>mom1m</td>
+      <td>Jegadeesh and Titman</td>
+      <td>1993, JF</td>
+      <td>1-month cumulative return</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>mom36m</td>
+      <td>Jegadeesh and Titman</td>
+      <td>1993, JF</td>
+      <td>Cumulative returns from months|$ t$|-36 to|$t$|-13</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>mom6m</td>
+      <td>Jegadeesh and Titman</td>
+      <td>1993, JF</td>
+      <td>5-month cumulative returns ending one month before month end</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>ms</td>
+      <td>Mohanram</td>
+      <td>2005, RAS</td>
+      <td>Sum of 8 indicator variables for fundamental performance</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>mve</td>
+      <td>Banz</td>
+      <td>1981, JFE</td>
+      <td>Natural log of market capitalization at end of month|$t$|-1</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>mve_ia</td>
+      <td>Asness, Porter, and Stevens</td>
+      <td>2000, WP</td>
+      <td>2-digit SIC industry-adjusted fiscal year-end market capitalization</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>nanalyst</td>
+      <td>Elgers, Lo, and Pfeiffer</td>
+      <td>2001, TAR</td>
+      <td>Number of analyst forecasts from most recently available I/B/E/S summary files in month prior to month of portfolio formation.nanalystset to zero if not covered in I/B/E/S summary file</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>nincr</td>
+      <td>Barth, Elliott, and Finn</td>
+      <td>1999, JAR</td>
+      <td>Number of consecutive quarters (up to eight quarters) with an increase in earnings (ibq) over same quarter in the prior year</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>operprof</td>
+      <td>Fama and French</td>
+      <td>2015, JFE</td>
+      <td>Revenue minus cost of goods sold - SG&amp;A expense - interest expense divided by lagged common shareholders’ equity</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>orgcap</td>
+      <td>Eisfeldt and Papanikolaou</td>
+      <td>2013, JF</td>
+      <td>Capitalized SG&amp;A expenses</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>pchcapx_ia</td>
+      <td>Abarbanell and Bushee</td>
+      <td>1998, TAR</td>
+      <td>2-digit SIC - fiscal-year mean-adjusted percent change in capital expenditures (capx)</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>pchcurrat</td>
+      <td>Ou and Penman</td>
+      <td>1989, JAE</td>
+      <td>Percent change incurrat.</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>pchdepr</td>
+      <td>Holthausen and Larcker</td>
+      <td>1992, JAE</td>
+      <td>Percent change indepr</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>pchgm_pchsale</td>
+      <td>Abarbanell and Bushee</td>
+      <td>1998, TAR</td>
+      <td>Percent change in gross margin (sale-cogs) minus percent change in sales (sale)</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>pchquick</td>
+      <td>Ou and Penman</td>
+      <td>1989, JAE</td>
+      <td>Percent change inquick</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>pchsale_pchinvt</td>
+      <td>Abarbanell and Bushee</td>
+      <td>1998, TAR</td>
+      <td>Annual percent change in sales (sale) minus annual percent change in inventory (invt).</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>pchsale_pchrect</td>
+      <td>Abarbanell and Bushee</td>
+      <td>1998, TAR</td>
+      <td>Annual percent change in sales (sale) minus annual percent change in receivables (rect)</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>pchsale_pchxsga</td>
+      <td>Abarbanell and Bushee</td>
+      <td>1998, TAR</td>
+      <td>Annual percent change in sales (sale) minus annual percent change in SG&amp;A (xsga)</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>pchsaleinv</td>
+      <td>Ou and Penman</td>
+      <td>1989, JAE</td>
+      <td>Percent change insaleinv</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>pctacc</td>
+      <td>Hafzalla, Lundholm, and Van Winkle</td>
+      <td>2011, TAR</td>
+      <td>Same asaccexcept that the numerator is divided by the absolute value ofib; ifib|$=$|0 thenibset to 0.01 for denominator</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>pricedelay</td>
+      <td>Hou &amp; Moskowitz</td>
+      <td>2005, RFS</td>
+      <td>The proportion of variation in weekly returns for 36 months ending in month|$ t$|explained by 4 lags of weekly market returns incremental to contemporaneous market return</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>ps</td>
+      <td>Piotroski</td>
+      <td>2000, JAR</td>
+      <td>Sum of 9 indicator variables to form fundamental health score</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>quick</td>
+      <td>Ou and Penman</td>
+      <td>1989, JAE</td>
+      <td>(current assets - inventory) / current liabilities</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>rd</td>
+      <td>Eberhart, Maxwell, and Siddique</td>
+      <td>2004, JF</td>
+      <td>An indicator variable equal to 1 if R&amp;D expense as a percentage of total assets has an increase greater than 5%.</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>rd_mve</td>
+      <td>Guo, Lev, and Shi</td>
+      <td>2006, JBFA</td>
+      <td>R&amp;D expense divided by end-of-fiscal-year market capitalization</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>rd_sale</td>
+      <td>Guo, Lev, and Shi</td>
+      <td>2006, JBFA</td>
+      <td>R&amp;D expense divided by sales (xrd/sale)</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>realestate</td>
+      <td>Tuzel</td>
+      <td>2010, RFS</td>
+      <td>Buildings and capitalized leases divided by gross PP&amp;E</td>
+    </tr>
+    <tr>
+      <th>78</th>
+      <td>retvol</td>
+      <td>Ang et al.</td>
+      <td>2006, JF</td>
+      <td>Standard deviation of daily returns from month|$t$|-1</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>roaq</td>
+      <td>Balakrishnan, Bartov, and Faurel</td>
+      <td>2010, JAE</td>
+      <td>Income before extraordinary items (ibq) divided by one quarter lagged total assets (atq)</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td>roavol</td>
+      <td>Francis et al.</td>
+      <td>2004, TAR</td>
+      <td>Standard deviation for 16 quarters of income before extraordinary items (ibq) divided by average total assets (atq)</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>roeq</td>
+      <td>Hou, Xue, and Zhang</td>
+      <td>2015 RFS</td>
+      <td>Earnings before extraordinary items divided by lagged common shareholders’ equity</td>
+    </tr>
+    <tr>
+      <th>82</th>
+      <td>roic</td>
+      <td>Brown and Rowe</td>
+      <td>2007, WP</td>
+      <td>Annual earnings before interest and taxes (ebit) minus nonoperating income (nopi) divided by non-cash enterprise value (ceq|$+$|lt-che)</td>
+    </tr>
+    <tr>
+      <th>83</th>
+      <td>rsup</td>
+      <td>Kama</td>
+      <td>2009, JBFA</td>
+      <td>Sales from quarter t minus sales from quarter|$t$|-4 (saleq) divided by fiscal-quarter-end market capitalization (cshoq*prccq)</td>
+    </tr>
+    <tr>
+      <th>84</th>
+      <td>salecash</td>
+      <td>Ou and Penman</td>
+      <td>1989, JAE</td>
+      <td>Annual sales divided by cash and cash equivalents</td>
+    </tr>
+    <tr>
+      <th>85</th>
+      <td>saleinv</td>
+      <td>Ou and Penman</td>
+      <td>1989, JAE</td>
+      <td>Annual sales divided by total inventory</td>
+    </tr>
+    <tr>
+      <th>86</th>
+      <td>salerec</td>
+      <td>Ou and Penman</td>
+      <td>1989, JAE</td>
+      <td>Annual sales divided by accounts receivable</td>
+    </tr>
+    <tr>
+      <th>87</th>
+      <td>secured</td>
+      <td>Valta</td>
+      <td>2016, JFQA</td>
+      <td>Total liability scaled secured debt</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>securedind</td>
+      <td>Valta</td>
+      <td>2016, JFQA</td>
+      <td>An indicator equal to 1 if company has secured debt obligations</td>
+    </tr>
+    <tr>
+      <th>89</th>
+      <td>sfe</td>
+      <td>Elgers, Lo, and Pfeiffer</td>
+      <td>2001, TAR</td>
+      <td>Analysts mean annual earnings forecast for nearest upcoming fiscal year from most recent month available prior to month of portfolio formation from I/B/E/S summary files scaled by price per share at fiscal quarter end</td>
+    </tr>
+    <tr>
+      <th>90</th>
+      <td>sgr</td>
+      <td>Lakonishok, Shleifer, and Vishny</td>
+      <td>1994, JF</td>
+      <td>Annual percent change in sales (sale)</td>
+    </tr>
+    <tr>
+      <th>91</th>
+      <td>sin</td>
+      <td>Hong &amp; Kacperczyk</td>
+      <td>2009, JFE</td>
+      <td>An indicator variable equal to 1 if a company’s primary industry classification is in smoke or tobacco, beer or alcohol, or gaming</td>
+    </tr>
+    <tr>
+      <th>92</th>
+      <td>SP</td>
+      <td>Barbee, Mukherji, and Raines</td>
+      <td>1996, FAJ</td>
+      <td>Annual revenue (sale) divided by fiscal year-end market capitalization</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>std_dolvol</td>
+      <td>Chordia, Subrahmanyam, and Anshuman</td>
+      <td>2001, JFE</td>
+      <td>Monthly standard deviation of daily dollar trading volume</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>std_turn</td>
+      <td>Chordia, Subrahmanyam, and Anshuman</td>
+      <td>2001, JFE</td>
+      <td>Monthly standard deviation of daily share turnover</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>stdacc</td>
+      <td>Bandyopadhyay, Huang, and Wirjanto</td>
+      <td>2010, WP</td>
+      <td>Standard deviation for 16 quarters of accruals (accmeasured with quarterly Compustat) scaled by sales; ifsaleq|$=$|0, then scale by 0.01</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>stdcf</td>
+      <td>Huang</td>
+      <td>2009, JEF</td>
+      <td>Standard deviation for 16 quarters of cash flows divided by sales (saleq); ifsaleq|$=$|0, then scale by 0.01. Cash flows defined asibqminus quarterly accruals</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>sue</td>
+      <td>Rendelman, Jones, and Latane</td>
+      <td>1982, JFE</td>
+      <td>Unexpected quarterly earnings divided by fiscal-quarter-end market cap. Unexpected earnings is I/B/E/S actual earnings minus median forecasted earnings if available, else it is the seasonally differenced quarterly earnings before extraordinary items from Compustat quarterly file</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td>tang</td>
+      <td>Almeida and Campello</td>
+      <td>2007, RFS</td>
+      <td>Cash holdings|$+$|0.715|$\times$|receivables|$+$|0.547|$\times$|inventory|$+$|0.535|$\times$|PPE/ totl assets</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>tb</td>
+      <td>Lev and Nissim</td>
+      <td>2004, TAR</td>
+      <td>Tax income, calculated from current tax expense divided by maximum federal tax rate, divided by income before extraordinary items</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>turn</td>
+      <td>Datar, Naik, and Radcliffe</td>
+      <td>1998, JFM</td>
+      <td>Average monthly trading volume for most recent 3 months scaled by number of shares outstanding in current month</td>
+    </tr>
+    <tr>
+      <th>101</th>
+      <td>zerotrade</td>
+      <td>Liu</td>
+      <td>2006, JFE</td>
+      <td>Turnover weighted number of zero trading days for most recent 1 month</td>
+    </tr>
+  </tbody>
+</table>
