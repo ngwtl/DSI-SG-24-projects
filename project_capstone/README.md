@@ -1,10 +1,25 @@
-# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Project 4 - West Nile Virus Prediction
+# Capstone Project - Understanding the cross-section of REIT returns
 
 ## Problem Statement
 
-Our team, as part of the Chicago Department of Public Health (CDPH), has been tasked with predicting the next outbreak of the West Nile Virus (WNV) in Chicago. This information would be useful for the City of Chicago and the CDPH to identify areas of high risk of outbreak in advance and to allocate resources accordingly. We will also perform a cost-benefit analysis of the current vector control program and make recommendation on the next steps going forward.
+I am a portfolio manager at a real estate fund of funds, and I am intrigued by recent publications in academia on machine learning and asset pricing. According to Campbell and Thompson (2008), small improvements in $R^{2}$ can lead to large improvements in performance for a mean-variance investor. They show that the proportionate increase in expected excess return earned by an active investor exploiting predictive information is
+\begin{equation*}
+\frac{R^{2}}{(1+R^{2})}\frac{(1+S^{2})}{S^{2}} 
+\end{equation*}
+, where $R^{2}$ is the predictive R-squared statistic and $S$ is the Sharpe ratio earned by a passive buy-and-hold investor. To put in another way, the Sharpe ratio $S\ast$ earned by an active investor with predictive capability is
+\begin{equation*}
+S\ast = \sqrt{\frac{S^{2} + R^{2}}{1 - R^{2}}}  
+\end{equation*}
 
-Due to the recent epidemic of West Nile Virus in the Windy City, we've had the Department of Public Health set up a surveillance and control system. We're hoping it will let us learn something from the mosquito population as we collect data over time. Pesticides are a necessary evil in the fight for public health and safety, not to mention expensive! We need to derive an effective plan to deploy pesticides throughout the city, and that is **exactly** where you come in!
+Sharpe ratio describes how much excess return an investor's portfolio receives for the volatility he has to endure for holding on to that portfolio, and it is how my performance as a portfolio manager is assessed by my clients. Sharpe ratio is formally defined as
+\begin{equation*}
+S = \frac{r_{p} - r_{f}}{\sigma_{p}}
+\end{equation*},
+where $r_{p}$ is the return on the investor's portfolio, $r_{f}$ is the return of a risk-free security e.g. U.S. Treasury bills (even though some might argue US treasuries are no longer the gold-standard for a risk-free security, with Senate Republicans playing fire with Democrats over their refusal to raise the debt ceiling recently), and $\sigma_{p}$ is the standard deviation of  $r_{p}$.
+
+My job is to improve my portfolio's Sharpe ratio by finding better ways to assemble my portfolio of real estate stocks to beat my competitors and my benchmark index, i.e. the FTSE Nareit U.S. Real Estate Index Series which tracks the performance of the U.S. REIT industry starting January 1972. I am encouraged by the recent findings of Gu, Kelly and Xiu (2020) who state that a portfolio that executes market timing on S&P 500 stocks using neural network forecasts enjoys an annualized (out-of-sample) Sharpe ratio of 0.77, as opposed a Sharpe ratio of 0.51 enjoyed by a passive buy-and-hold investor of the S&P 500 index. This is a more than 50% improvement in the risk-return tradeoff. 
+
+My goal is two-fold: improve predictions in the cross-section and time series of REIT returns. I shall study a set of candidate models to address my empirical challenges, starting with linear regression, generalized linear models with penalization, dimension reduction via principal component regression (PCR) and partial least squares (PLS), regression trees (including random forests and boosted trees), neural networks and other deep learning techniques that I will be learning in the weeks to come. This is not an exhaustive list of all machine learning methods, but one designed to be representative of predictive analytics tools from various branches of the machine learning universe.
 
 ## Executive Summary
 
