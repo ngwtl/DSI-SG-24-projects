@@ -8,19 +8,480 @@ My job is to improve my portfolio's Sharpe ratio by finding better ways to assem
 
 ## Executive Summary
 
-For this project, datasets containing information such as mosquitos species caught, number of mosquitoes caught, presence of WNV in the mosquitos and coordinate location of traps were used. Information on the date and location of spraying and various weather parameters were also utilized. The following summarises the analysis process:
+My dataset starts from 1990 through 2020, comprising of all REITs traded on NYSE, AMEX and NASDAQ. I designated 1990 through 2005 to be the training and validation sets, and 2006 through 2020 for out-of-sample testing. In addition, I made use of 94 stock-level characteristics assembled by Green, Hand and Zhang (2017) as input features for my predictive model.
 
-1. Impute or remove missing or duplicated data from the train, test, weather and spray datasets
+I managed to achieve an out-of-sample R2 of 0.42 with a 7-layer neural network with L2 regularisation and early stopping. I found that dimension reduction techniques and tree-based models did not work for REITs, unlike Gu, Kelly and Xiu (2020)'s work on the general stock market. In fact, basic regularisation techniques such as lasso and elastic net are the second best-performing prediction models for REITs, while these models are the second worst-performing models for the general stock market. 
 
-2. Merge the train and spray datasets and perform EDA on the effect of spraying on presence of WNV and number of mosquitos
+The best model from Gu, Kelly and Xiu (2020) is also a neural network, but its performance peaked at 3 layers. They found using deep learning (defined as anything more than 3 layers) results in overfitting to stock market noise. That is not my experience with REITs, as my out-of-sample R2 for a 3-layer network is 0.04, jumping to 0.23 for a 5-layer network, and peaking at 0.42 for a 7-layer network. 
 
-3. Merge the train and weather datasets and perform feature engineering and selection by evaluating the ROC_AUC score of models against the selected features iteratively 
 
-4. Tune the hyperparameters for 18 models by gridsearching and choose the best one based on ROC_AUC score on the train set, the CV ROC_AUC score on the train set , the ROC_AUC score on the test set and finally the Kaggle score
-
-The best model selected was the XGBoost Classifier (Model 18) as even though it has a lower ROC_AUC than the Logistic Regression (Model 17), it has a higher sensitivity which is important because Chicago city officials might make expensive decisions on mosquito-eradication methods (spray in areas we predict to be positive, and don't spray in areas we predict to be negative). Therefore it is also important to have as high true positive as possible, and as low false negative as possible. This points to using sensitivity as a secondary metric for us to use as assessment since ROC_AUC is quite close between Models 17 and 18.
 
 The following table summarizes the performance of all 18 models:
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Model Name</th>
+      <th>Selected Config</th>
+      <th>Train (1990-2000)</th>
+      <th>Validate (2001-2005)</th>
+      <th>Test (2006-2020)</th>
+      <th>Test (2006)</th>
+      <th>Test (2007)</th>
+      <th>Test (2008)</th>
+      <th>Test (2009)</th>
+      <th>Test (2010)</th>
+      <th>Test (2011)</th>
+      <th>Test (2012)</th>
+      <th>Test (2013)</th>
+      <th>Test (2014)</th>
+      <th>Test (2015)</th>
+      <th>Test (2016)</th>
+      <th>Test (2017)</th>
+      <th>Test (2018)</th>
+      <th>Test (2019)</th>
+      <th>Test (2020)</th>
+      <th>Remarks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>naive_reit</td>
+      <td>N.A.</td>
+      <td>0.00 (10.45)</td>
+      <td>0.00 (10.26)</td>
+      <td>0.00 (12.13)</td>
+      <td>0.00 (7.60)</td>
+      <td>0.00 (11.29)</td>
+      <td>0.00 (19.81)</td>
+      <td>0.00 (25.18)</td>
+      <td>0.00 (12.47)</td>
+      <td>0.00 (10.08)</td>
+      <td>0.00 (9.46)</td>
+      <td>0.00 (9.44)</td>
+      <td>0.00 (7.04)</td>
+      <td>0.00 (7.47)</td>
+      <td>0.00 (9.09)</td>
+      <td>0.00 (7.08)</td>
+      <td>0.00 (8.03)</td>
+      <td>0.00 (8.37)</td>
+      <td>0.00 (18.42)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>lr_reit</td>
+      <td>N.A.</td>
+      <td>1.99 (10.3)</td>
+      <td>0.69 (10.2)</td>
+      <td>-0.03 (12.13)</td>
+      <td>4.17 (7.44)</td>
+      <td>-3.50 (11.48)</td>
+      <td>-0.55 (19.87)</td>
+      <td>-0.02 (25.19)</td>
+      <td>1.79 (12.36)</td>
+      <td>-2.03 (10.19)</td>
+      <td>3.18 (9.31)</td>
+      <td>1.38 (9.37)</td>
+      <td>1.59 (6.99)</td>
+      <td>-2.95 (7.58)</td>
+      <td>2.22 (8.98)</td>
+      <td>-1.00 (7.12)</td>
+      <td>-5.43 (8.25)</td>
+      <td>3.70 (8.21)</td>
+      <td>-0.21 (18.43)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>fama-french_reit</td>
+      <td>bm, mve0</td>
+      <td>0.36 (10.4)</td>
+      <td>1.52 (10.2)</td>
+      <td>0.17 (12.12)</td>
+      <td>3.84 (7.45)</td>
+      <td>-4.46 (11.54)</td>
+      <td>-1.84 (19.99)</td>
+      <td>0.64 (25.10)</td>
+      <td>2.03 (12.34)</td>
+      <td>-0.68 (10.12)</td>
+      <td>3.28 (9.31)</td>
+      <td>1.25 (9.38)</td>
+      <td>3.36 (6.92)</td>
+      <td>-1.87 (7.54)</td>
+      <td>2.06 (8.99)</td>
+      <td>1.06 (7.05)</td>
+      <td>-2.57 (8.14)</td>
+      <td>3.50 (8.22)</td>
+      <td>-0.05 (18.42)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>carhart_reit</td>
+      <td>bm, mve0, mom12m</td>
+      <td>0.52 (10.4)</td>
+      <td>1.68 (10.2)</td>
+      <td>0.16 (12.12)</td>
+      <td>4.37 (7.43)</td>
+      <td>-3.46 (11.48)</td>
+      <td>-1.33 (19.94)</td>
+      <td>0.15 (25.16)</td>
+      <td>2.04 (12.34)</td>
+      <td>-0.71 (10.12)</td>
+      <td>2.65 (9.34)</td>
+      <td>1.65 (9.36)</td>
+      <td>3.06 (6.93)</td>
+      <td>-1.88 (7.54)</td>
+      <td>1.71 (9.01)</td>
+      <td>0.85 (7.05)</td>
+      <td>-2.06 (8.12)</td>
+      <td>3.34 (8.23)</td>
+      <td>-0.13 (18.43)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>huber_reit</td>
+      <td>[3.0, 0.0001]</td>
+      <td>1.58 (10.36)</td>
+      <td>0.90 (10.21)</td>
+      <td>-0.07 (12.13)</td>
+      <td>3.50 (7.47)</td>
+      <td>-2.04 (11.40)</td>
+      <td>-0.24 (19.84)</td>
+      <td>-0.24 (25.21)</td>
+      <td>0.25 (12.45)</td>
+      <td>-0.65 (10.12)</td>
+      <td>1.09 (9.41)</td>
+      <td>0.70 (9.40)</td>
+      <td>2.18 (6.96)</td>
+      <td>-2.61 (7.57)</td>
+      <td>1.41 (9.02)</td>
+      <td>-0.62 (7.11)</td>
+      <td>-2.98 (8.15)</td>
+      <td>2.99 (8.24)</td>
+      <td>-0.31 (18.44)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ridge_reit</td>
+      <td>[19920.457084538713]</td>
+      <td>1.19 (10.38)</td>
+      <td>1.82 (10.16)</td>
+      <td>0.18 (12.12)</td>
+      <td>4.43 (7.43)</td>
+      <td>-3.65 (11.49)</td>
+      <td>-1.12 (19.92)</td>
+      <td>0.16 (25.16)</td>
+      <td>1.98 (12.34)</td>
+      <td>-1.29 (10.15)</td>
+      <td>3.80 (9.28)</td>
+      <td>1.91 (9.35)</td>
+      <td>2.74 (6.94)</td>
+      <td>-1.82 (7.54)</td>
+      <td>2.31 (8.98)</td>
+      <td>0.49 (7.07)</td>
+      <td>-4.39 (8.21)</td>
+      <td>4.05 (8.20)</td>
+      <td>-0.13 (18.43)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>lasso_reit</td>
+      <td>[0.07196856730011514]</td>
+      <td>1.28 (10.38)</td>
+      <td>1.93 (10.16)</td>
+      <td>0.23 (12.11)</td>
+      <td>4.37 (7.43)</td>
+      <td>-3.54 (11.49)</td>
+      <td>-1.09 (19.92)</td>
+      <td>0.26 (25.15)</td>
+      <td>2.08 (12.34)</td>
+      <td>-1.03 (10.14)</td>
+      <td>3.42 (9.30)</td>
+      <td>1.89 (9.35)</td>
+      <td>3.51 (6.92)</td>
+      <td>-1.64 (7.54)</td>
+      <td>1.70 (9.01)</td>
+      <td>0.50 (7.07)</td>
+      <td>-4.16 (8.20)</td>
+      <td>4.21 (8.19)</td>
+      <td>-0.07 (18.42)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>enet_reit</td>
+      <td>[0.9, 0.07880462815669913]</td>
+      <td>1.28 (10.38)</td>
+      <td>1.93 (10.16)</td>
+      <td>0.23 (12.11)</td>
+      <td>4.37 (7.43)</td>
+      <td>-3.54 (11.49)</td>
+      <td>-1.09 (19.92)</td>
+      <td>0.26 (25.15)</td>
+      <td>2.08 (12.34)</td>
+      <td>-1.03 (10.14)</td>
+      <td>3.43 (9.30)</td>
+      <td>1.90 (9.35)</td>
+      <td>3.52 (6.92)</td>
+      <td>-1.63 (7.54)</td>
+      <td>1.71 (9.01)</td>
+      <td>0.52 (7.07)</td>
+      <td>-4.17 (8.20)</td>
+      <td>4.20 (8.19)</td>
+      <td>-0.07 (18.42)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>pcr_reit</td>
+      <td>28</td>
+      <td>0.90 (10.40)</td>
+      <td>1.89 (10.16)</td>
+      <td>0.09 (12.12)</td>
+      <td>3.79 (7.46)</td>
+      <td>-3.68 (11.49)</td>
+      <td>-1.31 (19.94)</td>
+      <td>0.20 (25.16)</td>
+      <td>2.13 (12.33)</td>
+      <td>-1.07 (10.14)</td>
+      <td>3.27 (9.31)</td>
+      <td>1.65 (9.36)</td>
+      <td>3.16 (6.93)</td>
+      <td>-2.25 (7.56)</td>
+      <td>2.12 (8.99)</td>
+      <td>0.29 (7.07)</td>
+      <td>-4.42 (8.21)</td>
+      <td>3.98 (8.20)</td>
+      <td>-0.23 (18.44)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>pls_reit</td>
+      <td>1</td>
+      <td>1.03 (10.39)</td>
+      <td>1.71 (10.17)</td>
+      <td>-0.06 (12.13)</td>
+      <td>4.19 (7.44)</td>
+      <td>-4.17 (11.52)</td>
+      <td>-1.10 (19.92)</td>
+      <td>-0.15 (25.20)</td>
+      <td>1.75 (12.36)</td>
+      <td>-1.84 (10.18)</td>
+      <td>3.68 (9.29)</td>
+      <td>1.99 (9.34)</td>
+      <td>2.32 (6.96)</td>
+      <td>-2.06 (7.55)</td>
+      <td>2.14 (8.99)</td>
+      <td>0.18 (7.08)</td>
+      <td>-4.79 (8.22)</td>
+      <td>3.94 (8.20)</td>
+      <td>-0.42 (18.45)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>rf_reit</td>
+      <td>[300, 0.2, 10, 70]</td>
+      <td>13.97 (9.69)</td>
+      <td>2.31 (10.14)</td>
+      <td>-0.75 (12.17)</td>
+      <td>4.65 (7.42)</td>
+      <td>-11.55 (11.92)</td>
+      <td>0.56 (19.76)</td>
+      <td>0.03 (25.18)</td>
+      <td>3.62 (12.24)</td>
+      <td>-2.18 (10.19)</td>
+      <td>1.80 (9.38)</td>
+      <td>1.17 (9.38)</td>
+      <td>2.26 (6.96)</td>
+      <td>-2.85 (7.58)</td>
+      <td>0.57 (9.06)</td>
+      <td>-0.40 (7.10)</td>
+      <td>-1.76 (8.10)</td>
+      <td>-8.93 (8.73)</td>
+      <td>-1.38 (18.54)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>et_reit</td>
+      <td>[200, 0.5, 15, 70]</td>
+      <td>5.56 (10.15)</td>
+      <td>1.63 (10.17)</td>
+      <td>-0.04 (12.13)</td>
+      <td>4.20 (7.44)</td>
+      <td>-4.29 (11.53)</td>
+      <td>-0.31 (19.84)</td>
+      <td>-0.90 (25.30)</td>
+      <td>2.72 (12.30)</td>
+      <td>-1.07 (10.14)</td>
+      <td>3.04 (9.32)</td>
+      <td>1.71 (9.36)</td>
+      <td>3.56 (6.91)</td>
+      <td>-2.28 (7.56)</td>
+      <td>1.87 (9.00)</td>
+      <td>-0.46 (7.10)</td>
+      <td>-3.92 (8.19)</td>
+      <td>2.87 (8.25)</td>
+      <td>-0.15 (18.43)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>xg_reit</td>
+      <td>[100, 1, 0.01, 0]</td>
+      <td>1.00 (10.39)</td>
+      <td>1.78 (10.17)</td>
+      <td>-0.11 (12.13)</td>
+      <td>3.63 (7.46)</td>
+      <td>-5.46 (11.59)</td>
+      <td>-0.64 (19.88)</td>
+      <td>-0.44 (25.24)</td>
+      <td>0.98 (12.41)</td>
+      <td>-0.64 (10.12)</td>
+      <td>2.76 (9.33)</td>
+      <td>0.95 (9.39)</td>
+      <td>2.64 (6.95)</td>
+      <td>-1.44 (7.53)</td>
+      <td>1.44 (9.02)</td>
+      <td>0.87 (7.05)</td>
+      <td>-1.95 (8.11)</td>
+      <td>2.80 (8.25)</td>
+      <td>-0.15 (18.43)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>nn1-l2_reit</td>
+      <td>[&lt;function l2 at 0x7fb45bb4c050&gt;, 3.1622776601683795e-05, 0.001]</td>
+      <td>2.84 (10.30)</td>
+      <td>1.40 (10.19)</td>
+      <td>0.17 (12.12)</td>
+      <td>3.04 (7.48)</td>
+      <td>-3.14 (11.46)</td>
+      <td>-0.98 (19.91)</td>
+      <td>0.42 (25.13)</td>
+      <td>1.54 (12.37)</td>
+      <td>-0.77 (10.12)</td>
+      <td>3.98 (9.27)</td>
+      <td>2.59 (9.31)</td>
+      <td>1.60 (6.98)</td>
+      <td>-2.16 (7.56)</td>
+      <td>2.41 (8.98)</td>
+      <td>-0.05 (7.09)</td>
+      <td>-5.10 (8.24)</td>
+      <td>2.92 (8.25)</td>
+      <td>-0.10 (18.42)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>nn3-l2_reit</td>
+      <td>[&lt;function l2 at 0x7fb45bb4c050&gt;, 0.0001, 0.001]</td>
+      <td>3.54 (10.26)</td>
+      <td>1.24 (10.19)</td>
+      <td>0.04 (12.13)</td>
+      <td>2.62 (7.50)</td>
+      <td>-3.64 (11.49)</td>
+      <td>-0.61 (19.87)</td>
+      <td>0.09 (25.17)</td>
+      <td>0.67 (12.43)</td>
+      <td>-0.18 (10.09)</td>
+      <td>1.16 (9.41)</td>
+      <td>1.73 (9.36)</td>
+      <td>3.07 (6.93)</td>
+      <td>-1.32 (7.52)</td>
+      <td>1.52 (9.02)</td>
+      <td>1.24 (7.04)</td>
+      <td>-3.43 (8.17)</td>
+      <td>2.10 (8.28)</td>
+      <td>-0.02 (18.42)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>nn5-l2_reit</td>
+      <td>[&lt;function l2 at 0x7fb45bb4c050&gt;, 0.0001, 0.01]</td>
+      <td>0.84 (10.40)</td>
+      <td>1.55 (10.18)</td>
+      <td>0.23 (12.11)</td>
+      <td>2.50 (7.50)</td>
+      <td>-3.51 (11.48)</td>
+      <td>-1.69 (19.98)</td>
+      <td>0.57 (25.11)</td>
+      <td>1.74 (12.36)</td>
+      <td>-0.97 (10.13)</td>
+      <td>3.50 (9.29)</td>
+      <td>1.11 (9.38)</td>
+      <td>3.34 (6.92)</td>
+      <td>-1.82 (7.54)</td>
+      <td>3.42 (8.93)</td>
+      <td>1.21 (7.04)</td>
+      <td>-2.41 (8.13)</td>
+      <td>4.23 (8.19)</td>
+      <td>-0.22 (18.44)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>nn7-l2_reit</td>
+      <td>[&lt;function l2 at 0x7fbd6a463050&gt;, 3.1622776601683795e-05, 0.01]</td>
+      <td>1.47 (10.37)</td>
+      <td>1.89 (10.16)</td>
+      <td>0.42 (12.10)</td>
+      <td>2.09 (7.52)</td>
+      <td>-2.02 (11.40)</td>
+      <td>-1.01 (19.91)</td>
+      <td>0.85 (25.08)</td>
+      <td>1.78 (12.36)</td>
+      <td>-0.32 (10.10)</td>
+      <td>3.32 (9.30)</td>
+      <td>1.69 (9.36)</td>
+      <td>2.06 (6.97)</td>
+      <td>-2.25 (7.56)</td>
+      <td>2.09 (8.99)</td>
+      <td>1.10 (7.05)</td>
+      <td>-3.12 (8.16)</td>
+      <td>4.15 (8.19)</td>
+      <td>0.00 (18.42)</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>nn9-l2_reit</td>
+      <td>[&lt;function l2 at 0x7fbd6a463050&gt;, 0.00031622776601683794, 0.01]</td>
+      <td>0.66 (10.41)</td>
+      <td>1.32 (10.19)</td>
+      <td>0.32 (12.11)</td>
+      <td>2.45 (7.51)</td>
+      <td>-2.08 (11.40)</td>
+      <td>-1.07 (19.92)</td>
+      <td>0.67 (25.10)</td>
+      <td>1.94 (12.35)</td>
+      <td>-0.78 (10.12)</td>
+      <td>3.03 (9.32)</td>
+      <td>1.42 (9.37)</td>
+      <td>2.43 (6.96)</td>
+      <td>-1.77 (7.54)</td>
+      <td>1.63 (9.01)</td>
+      <td>0.27 (7.08)</td>
+      <td>-2.00 (8.11)</td>
+      <td>4.03 (8.20)</td>
+      <td>-0.25 (18.44)</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+1
+df_r2decrease_reit 
 
 | Model No. | Classifier | CV Score (train) | ROC_AUC (train) | ROC_AUC (test) | Kaggle Score | Runtime (sec) |
 |---|---|---|---|---|---|---|
@@ -85,106 +546,3 @@ The following table summarizes the performance of all 18 models:
 | AvgSpeed | Float | Weather | Wing Average Speed |
 
 
-	Feature acronym	Original author(s)	Date, journal	Description of feature
-0	absacc	Bandyopadhyay, Huang, and Wirjanto	2010, WP	Absolute value ofacc
-1	acc	Sloan	1996, TAR	Annual income before extraordinary items (ib) ...
-2	aeavol	Lerman, Livnat, and Mendenhall	2008, WP	Average daily trading volume (vol) for 3 days ...
-3	age	Jiang, Lee, and Zhang	2005, RAS	Number of years since first Compustat coverage
-4	agr	Cooper, Gulen, and Schill	2008, JF	Annual percent change in total assets (at)
-5	baspread	Amihud and Mendelson	1989, JF	Monthly average of daily bid-ask spread divide...
-6	beta	Fama and MacBeth	1973, JPE	Estimated market beta from weekly returns and ...
-7	betasq	Fama and MacBeth	1973, JPE	Market beta squared
-8	bm	Rosenberg, Reid, and Lanstein	1985, JPM	Book value of equity (ceq) divided by end of f...
-9	bm_ia	Asness, Porter, and Stevens	2000, WP	Industry adjusted book-to-market ratio
-10	cash	Palazzo	2012, JFE	Cash and cash equivalents divided by average t...
-11	cashdebt	Ou and Penman	1989, JAE	Earnings before depreciation and extraordinary...
-12	cashpr	Chandrashekar and Rao	2009, WP	Fiscal year-end market capitalization plus lon...
-13	cfp	Desai, Rajgopal, and Venkatachalam	2004, TAR	Operating cash flows divided by fiscal-year-en...
-14	cfp_ia	Asness, Porter and Stevens	2000, WP	Industry adjustedcfp
-15	chatoia	Soliman	2008, TAR	2-digit SIC - fiscal-year mean-adjusted change...
-16	chcsho	Pontiff and Woodgate	2008, JF	Annual percent change in shares outstanding (c...
-17	chempia	Asness, Porter, and Stevens	1994, WP	Industry-adjusted change in number of employees
-18	chfeps	Hawkins, Chamberlin, and Daniel	1984, FAJ	Mean analyst forecast in month prior to fiscal...
-19	chinv	Thomas and Zhang	2002, RAS	Change in inventory (inv) scaled by average to...
-20	chmom	Gettleman and Marks	2006, WP	Cumulative returns from months| 𝑡 |-6 to| 𝑡 |-...
-21	chnanalyst	Scherbina	2008 RF	Change innanalystfrom month| 𝑡 |-3 to month| 𝑡 |
-22	chpmia	Soliman	2008, TAR	2-digit SIC - fiscal-year mean adjusted change...
-23	chtx	Thomas and Zhang	2011, JAR	Percent change in total taxes (txtq) from quar...
-24	cinvest	Titman, Wei, and Xie	2004, JFQA	Change over one quarter in net PP&E (ppentq) d...
-25	convind	Valta	2016, JFQA	An indicator equal to 1 if company has convert...
-26	currat	Ou and Penman	1989, JAE	Current assets / current liabilities
-27	depr	Holthausen and Larcker	1992, JAE	Depreciation divided by PP&E
-28	disp	Diether, Malloy, and Scherbina	2002, JF	Standard deviation of analyst forecasts in mon...
-29	divi	Michaely, Thaler, and Womack	1995, JF	An indicator variable equal to 1 if company pa...
-30	divo	Michaely, Thaler, and Womack	1995, JF	An indicator variable equal to 1 if company do...
-31	dolvol	Chordia, Subrahmanyam, and Anshuman	2001, JFE	Natural log of trading volume times price per ...
-32	dy	Litzenberger and Ramaswamy	1982, JF	Total dividends (dvt) divided by market capita...
-33	ear	Kishore et al.	2008, WP	Sum of daily returns in three days around earn...
-34	egr	Richardson et al.	2005, JAE	Annual percent change in book value of equity ...
-35	ep	Basu	1977, JF	Annual income before extraordinary items (ib) ...
-36	fgr5yr	Bauman and Dowen	1988, FAJ	Most recently available analyst forecasted 5-y...
-37	gma	Novy-Marx	2013, JFE	Revenues (revt) minus cost of goods sold (cogs...
-38	grCAPX	Anderson and Garcia-Feijoo	2006, JF	Percent change in capital expenditures from ye...
-39	grltnoa	Fairfield, Whisenant, and Yohn	2003, TAR	Growth in long-term net operating assets
-40	herf	Hou and Robinson	2006, JF	2-digit SIC - fiscal-year sales concentration ...
-41	hire	Bazdresch, Belo, and Lin	2014, JPE	Percent change in number of employees (emp)
-42	idiovol	Ali, Hwang, and Trombley	2003, JFE	Standard deviation of residuals of weekly retu...
-43	ill	Amihud	2002, JFM	Average of daily (absolute return / dollar vol...
-44	indmom	Moskowitz and Grinblatt	1999, JF	Equal weighted average industry 12-month returns
-45	invest	Chen and Zhang	2010, JF	Annual change in gross property, plant, and eq...
-46	IPO	Loughran and Ritter	1995, JF	An indicator variable equal to 1 if first year...
-47	lev	Bhandari	1988, JF	Total liabilities (lt) divided by fiscal year-...
-48	lgr	Richardson et al.	2005, JAE	Annual percent change in total liabilities (lt)
-49	maxret	Bali, Cakici, and Whitelaw	2011, JFE	Maximum daily return from returns during calen...
-50	mom12m	Jegadeesh	1990, JF	11-month cumulative returns ending one month b...
-51	mom1m	Jegadeesh and Titman	1993, JF	1-month cumulative return
-52	mom36m	Jegadeesh and Titman	1993, JF	Cumulative returns from months| 𝑡 |-36 to| 𝑡 ...
-53	mom6m	Jegadeesh and Titman	1993, JF	5-month cumulative returns ending one month be...
-54	ms	Mohanram	2005, RAS	Sum of 8 indicator variables for fundamental p...
-55	mve	Banz	1981, JFE	Natural log of market capitalization at end of...
-56	mve_ia	Asness, Porter, and Stevens	2000, WP	2-digit SIC industry-adjusted fiscal year-end ...
-57	nanalyst	Elgers, Lo, and Pfeiffer	2001, TAR	Number of analyst forecasts from most recently...
-58	nincr	Barth, Elliott, and Finn	1999, JAR	Number of consecutive quarters (up to eight qu...
-59	operprof	Fama and French	2015, JFE	Revenue minus cost of goods sold - SG&A expens...
-60	orgcap	Eisfeldt and Papanikolaou	2013, JF	Capitalized SG&A expenses
-61	pchcapx_ia	Abarbanell and Bushee	1998, TAR	2-digit SIC - fiscal-year mean-adjusted percen...
-62	pchcurrat	Ou and Penman	1989, JAE	Percent change incurrat.
-63	pchdepr	Holthausen and Larcker	1992, JAE	Percent change indepr
-64	pchgm_pchsale	Abarbanell and Bushee	1998, TAR	Percent change in gross margin (sale-cogs) min...
-65	pchquick	Ou and Penman	1989, JAE	Percent change inquick
-66	pchsale_pchinvt	Abarbanell and Bushee	1998, TAR	Annual percent change in sales (sale) minus an...
-67	pchsale_pchrect	Abarbanell and Bushee	1998, TAR	Annual percent change in sales (sale) minus an...
-68	pchsale_pchxsga	Abarbanell and Bushee	1998, TAR	Annual percent change in sales (sale) minus an...
-69	pchsaleinv	Ou and Penman	1989, JAE	Percent change insaleinv
-70	pctacc	Hafzalla, Lundholm, and Van Winkle	2011, TAR	Same asaccexcept that the numerator is divided...
-71	pricedelay	Hou & Moskowitz	2005, RFS	The proportion of variation in weekly returns ...
-72	ps	Piotroski	2000, JAR	Sum of 9 indicator variables to form fundament...
-73	quick	Ou and Penman	1989, JAE	(current assets - inventory) / current liabili...
-74	rd	Eberhart, Maxwell, and Siddique	2004, JF	An indicator variable equal to 1 if R&D expens...
-75	rd_mve	Guo, Lev, and Shi	2006, JBFA	R&D expense divided by end-of-fiscal-year mark...
-76	rd_sale	Guo, Lev, and Shi	2006, JBFA	R&D expense divided by sales (xrd/sale)
-77	realestate	Tuzel	2010, RFS	Buildings and capitalized leases divided by gr...
-78	retvol	Ang et al.	2006, JF	Standard deviation of daily returns from month...
-79	roaq	Balakrishnan, Bartov, and Faurel	2010, JAE	Income before extraordinary items (ibq) divide...
-80	roavol	Francis et al.	2004, TAR	Standard deviation for 16 quarters of income b...
-81	roeq	Hou, Xue, and Zhang	2015 RFS	Earnings before extraordinary items divided by...
-82	roic	Brown and Rowe	2007, WP	Annual earnings before interest and taxes (ebi...
-83	rsup	Kama	2009, JBFA	Sales from quarter t minus sales from quarter|...
-84	salecash	Ou and Penman	1989, JAE	Annual sales divided by cash and cash equivalents
-85	saleinv	Ou and Penman	1989, JAE	Annual sales divided by total inventory
-86	salerec	Ou and Penman	1989, JAE	Annual sales divided by accounts receivable
-87	secured	Valta	2016, JFQA	Total liability scaled secured debt
-88	securedind	Valta	2016, JFQA	An indicator equal to 1 if company has secured...
-89	sfe	Elgers, Lo, and Pfeiffer	2001, TAR	Analysts mean annual earnings forecast for nea...
-90	sgr	Lakonishok, Shleifer, and Vishny	1994, JF	Annual percent change in sales (sale)
-91	sin	Hong & Kacperczyk	2009, JFE	An indicator variable equal to 1 if a company’...
-92	SP	Barbee, Mukherji, and Raines	1996, FAJ	Annual revenue (sale) divided by fiscal year-e...
-93	std_dolvol	Chordia, Subrahmanyam, and Anshuman	2001, JFE	Monthly standard deviation of daily dollar tra...
-94	std_turn	Chordia, Subrahmanyam, and Anshuman	2001, JFE	Monthly standard deviation of daily share turn...
-95	stdacc	Bandyopadhyay, Huang, and Wirjanto	2010, WP	Standard deviation for 16 quarters of accruals...
-96	stdcf	Huang	2009, JEF	Standard deviation for 16 quarters of cash flo...
-97	sue	Rendelman, Jones, and Latane	1982, JFE	Unexpected quarterly earnings divided by fisca...
-98	tang	Almeida and Campello	2007, RFS	Cash holdings| + |0.715| × |receivables|$...
-99	tb	Lev and Nissim	2004, TAR	Tax income, calculated from current tax expens...
-100	turn	Datar, Naik, and Radcliffe	1998, JFM	Average monthly trading volume for most recent...
-101	zerotrade	Liu	2006, JFE	Turnover
