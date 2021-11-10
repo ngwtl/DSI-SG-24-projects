@@ -1,4 +1,4 @@
-# Capstone Project - Understanding the cross-section of REIT returns
+# Capstone Project - Understanding and predicting the cross-section of REIT returns
 
 ## Problem Statement
 
